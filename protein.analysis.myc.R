@@ -432,13 +432,16 @@ g2 <- mut.dt %>% subset(position %>% as.character() %>% as.numeric() < TAD_end) 
   .[order(.$V1, decreasing = TRUE),] %>%
   .[1:5,] %>%
   dplyr::rename(., Number.annotated.mutations = V1)
+
 rownames(g2) <- c("1","2","3","4", "5")
+
 g3 <- mut.dt %>% subset(position %>% as.character() %>% as.numeric() < TAD_end) %>% 
   subset(wildtype %>% as.character() == "D") %>%
   ddply(., .(wildtype,position, altered), nrow) %>%
   .[order(.$V1, decreasing = TRUE),] %>%
   .[1:5,] %>%
   dplyr::rename(., Number.annotated.mutations = V1)
+
 rownames(g3) <- c("1","2","3","4", "5")
 #-------------------------------------------------------------------#
 
@@ -573,17 +576,6 @@ colnames(df) <- c("percentage AA in TAD", "percentage mutation in TAD")
 rownames(df) <- c("acidic", "proline", "aromatic")
 
 g6 <- df
-
-title1 <- textGrob("Most frequently mutated prolines in TAD")
-
-pdf("TAD.mutation.stats.pdf")
-grid.arrange(tableGrob(g6), ncol =1 , nrow = 1, top = textGrob("Percentage amino acids and mutations in TAD"))
-  grid.arrange(tableGrob(g1),tableGrob(p1), ncol =1 , nrow = 2, top = textGrob("Most frequently mutated prolines in TAD"))
-  grid.arrange(tableGrob(g2), tableGrob(p2), ncol =1 , nrow = 2, top = textGrob("Most frequently mutated glutamic acids in TAD"))
-  grid.arrange(tableGrob(g3), ncol =1 , nrow = 1, top = textGrob("Most frequently mutated aspartic acids in TAD"))
-  grid.arrange(tableGrob(g4), ncol =1 , nrow = 1, top = textGrob("Most frequently mutated phenylalanines in TAD"))
-  grid.arrange(tableGrob(g5), tableGrob(p3), ncol =1 , nrow = 2, top = textGrob("Most frequently mutated tyrosines in TAD"))
-dev.off()
 
 #-------------------------------------------------------------------#
 
